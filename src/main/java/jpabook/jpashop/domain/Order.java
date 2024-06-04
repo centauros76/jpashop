@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
@@ -57,10 +58,10 @@ public class Order {
         Order order = new Order();
         order.setMember(member);
         order.setDelivery(delivery);
-//        Arrays.stream(orderItems).forEach(order::addOrderItem);
-        for (OrderItem orderItem : orderItems) {
-            order.addOrderItem(orderItem);
-        }
+        Arrays.stream(orderItems).forEach(order::addOrderItem);
+//        for (OrderItem orderItem : orderItems) {
+//            order.addOrderItem(orderItem);
+//        }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;
