@@ -5,9 +5,6 @@ import jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static jakarta.persistence.FetchType.*;
 
 @Entity
@@ -27,7 +24,33 @@ public class OrderItem {
     private Order order;
 
     private int orderPrice;
-
     private int count;
 
+    //== 생성 메서드 ==//
+    public static OrderItem createOderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.reduceStockQuantity(count);
+        return orderItem;
+    }
+
+    //== 비즈니스 로직 ==//
+    /**
+     * 주문 취소 재고 원복
+     */
+    public void cancel() {
+         item.increaseStockQuantity(count);
+    }
+
+    //== 조회 로직 ==//
+
+    /**
+     * 주문 상품 전체 가격
+     */
+    public int getTotalPrice() {
+        return orderPrice * count;
+    }
 }

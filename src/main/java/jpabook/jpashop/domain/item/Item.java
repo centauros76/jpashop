@@ -31,14 +31,14 @@ public abstract class Item {
     /**
      * 재고 증가
      */
-    private void increaseStockQuantity(int quantity) {
+    public void increaseStockQuantity(int quantity) {
         this.stockQuantity += quantity;
     }
 
     /**
      * 재고 감소
      */
-    private void reduceStockQuantity(int quantity) {
+    public void reduceStockQuantity(int quantity) {
         int restStockQuantity = this.stockQuantity - quantity;
         if (restStockQuantity < 0) {
             throw new NotEnoughStockException("need more stock");
