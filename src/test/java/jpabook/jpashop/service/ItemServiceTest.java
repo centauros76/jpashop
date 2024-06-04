@@ -24,11 +24,13 @@ class ItemServiceTest {
         Item book = new Book();
         book.setName("alice");
         book.setPrice(10000);
+        book.setStockQuantity(5000);
 
         //when
         Long bookId = itemService.saveItem(book);
 
         //then
+        em.flush();
         assertEquals(itemRepository.findOne(bookId), book);
     }
 }
