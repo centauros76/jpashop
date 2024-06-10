@@ -1,8 +1,7 @@
 package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,13 +12,16 @@ import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@Getter @Setter
-@Table(name="orders")
+@Getter
+@Setter
+@Table(name = "orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "order_id")
-    private Long id;
+     private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
@@ -76,7 +78,7 @@ public class Order {
             throw new IllegalStateException("배송 완료된 주문은 취소가 불가능 합니다.");
         }
         this.setStatus(OrderStatus.CANCEL);
-        this.orderItems.stream().forEach(OrderItem::cancel);
+        this.orderItems.forEach(OrderItem::cancel);
     }
 
     //== 조회 로직 ==//
@@ -86,6 +88,6 @@ public class Order {
     public int getTotalPrice() {
         return orderItems.stream()
                 .mapToInt(OrderItem::getTotalPrice)
-                .sum();
+                 .sum();
     }
 }
